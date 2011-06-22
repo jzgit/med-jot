@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Jot</title>
+    <link href="todos.css" media="all" rel="stylesheet" type="text/css"/>
+    <script src="js/json2.js"></script>
+    <script src="js/jquery-1.5.js"></script>
+    <script src="js/underscore-1.1.6.js"></script>
+    <script src="js/backbone.js"></script>
+    <script src="js/backbone-localstorage.js"></script>
+    <script src="js/todos.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Todo App Interface -->
+
+    <div id="todoapp">
+
+      <div class="title">
+        <h1>MedJot</h1>
+      </div>
+
+      <div class="content">
+
+        <div id="create-todo">
+          <input id="new-todo" placeholder="Jot whatever you like." type="text" />
+          <span class="ui-tooltip-top" style="display:none;">Press Enter to save this task</span>
+        </div>
+        <div id="destination">
+          <h2>jot destination: <span>default</span></h2>
+        </div>
+
+
+        <div id="todos">
+          <ul id="todo-list"></ul>
+        </div>
+
+        <div id="todo-stats"></div>
+
+      </div>
+
+    </div>
+    <div id="history">
+
+        <div class="title">
+          <h1>Medical History</h1>
+        </div>
+
+        <div class="content">
+
+          <div id="todos">
+            <div class="title">
+              <h2>-- History of Present Illness --</h2>
+              </div>
+              <div class="title">
+                <h2>-- Past Medical History --</h2>
+              </div>
+              <div class="title">
+                <h2>-- Family History --</h2>
+              </div>
+              <div class="title">
+                <h2>-- Social History --</h2>
+              </div>
+              <div class="title">
+                <h2>-- Review of Systems --</h2>
+              </div>
+
+
+            <ul id="todo-list"></ul>
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <!--
+    <ul id="instructions">
+      <li>Double-click to edit.</li>
+      <li><a href="../../docs/todos.html">View the annotated source.</a></li>
+    </ul>
+      -->
+
+    <!--
+    <div id="credits">
+      Created by
+      <br />
+      <a href="http://jgn.me/">J&eacute;r&ocirc;me Gravel-Niquet</a>
+    </div>
+    -->
+
+    <!-- Templates -->
+
+    <script type="text/template" id="item-template">
+      <div class="todo <%= done ? 'done' : '' %>">
+        <div class="display">
+          <div class="todo-content"></div>
+          <span class="todo-destroy"></span>
+          <div class="moves">
+            <div class="todo-move ros">ROS</div>
+            <div class="todo-move sh">SH</div>
+            <div class="todo-move fh">FH</div>
+            <div class="todo-move meds">MEDS</div>
+            <div class="todo-move pmh">PMH</div>
+            <div class="todo-move hpi">HPI</div>
+          </div>
+        </div>
+        <div class="edit">
+          <input class="todo-input" type="text" value="" />
+        </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="stats-template">
+      <% if (total) { %>
+        <span class="todo-count">
+          <span class="number"><%= remaining %></span>
+          <span class="word"><%= remaining == 1 ? 'item' : 'items' %></span> left.
+        </span>
+      <% } %>
+      <% if (done) { %>
+        <span class="todo-clear">
+          <a href="#">
+            Clear <span class="number-done"><%= done %></span>
+            completed <span class="word-done"><%= done == 1 ? 'item' : 'items' %></span>
+          </a>
+        </span>
+      <% } %>
+    </script>
+
+  </body>
+
+</html>
