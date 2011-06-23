@@ -261,13 +261,13 @@ $(function(){
         var flag = content.match(/(\.+)(cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i);
         var location = flag[2].toUpperCase();
         var f = flag[1].length;
-        var content = content.replace(/\.+(cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i, "");
+        var content = content.replace(/\.+(cc|hpi|pmh|psh|meds|sh|fh|ros|jot)/i, "");
 
       };
-
+      
+      if (location == 'JOT') { location = "undefined" };
       if (f == 2) { this.currentDestination = location };
       if (!f) { location = this.currentDestination };
-      if (location == 'JOT' && f == 2) { this.currentDestination = "undefined" };
       
       var attrs = this.newAttributes();
       attrs.content = content;
