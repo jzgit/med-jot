@@ -195,7 +195,8 @@ $(function(){
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       "keypress #new-todo":  "createOnEnter",
-      "keyup #new-todo":     "showTooltip"
+      "keyup #new-todo":     "showTooltip",
+      "click span#help":         "showHelp",
     },
 
     // At initialization we bind to the relevant events on the `Todos`
@@ -276,7 +277,13 @@ $(function(){
       Todos.create(attrs);
       this.input.val('');
     },
-
+    
+    // reshow help menu
+    showHelp: function() {
+      $("#guider_overlay").fadeIn("fast");
+      $('.guider').fadeIn("fast");
+    },
+    
 
     // Lazily show the tooltip that tells you to press `enter` to save
     // a new todo item, after one second.

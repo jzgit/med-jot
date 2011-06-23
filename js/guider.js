@@ -257,6 +257,8 @@ var guider = (function(){
       guider._currentGuiderID = id;
       return guider;
     }
+
+    
   };
 
   return guider;
