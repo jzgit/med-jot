@@ -23,7 +23,7 @@ var guider = (function(){
       overlay: false,
       position: 0, // 1-12 follows an analog clock, 0 means centered
       title: "Sample title goes here",
-      width: 400
+      width: 525
     },
 
     _htmlSkeleton: [
