@@ -3,12 +3,14 @@
 
   <head>
     <title>Jot</title>
-    <link href="todos.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/todos.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/guider.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="js/json2.js"></script>
     <script src="js/jquery-1.5.js"></script>
     <script src="js/underscore-1.1.6.js"></script>
     <script src="js/backbone.js"></script>
     <script src="js/backbone-localstorage.js"></script>
+    <script src="js/guider.js"></script>
     <script src="js/todos.js"></script>
   </head>
 
@@ -45,12 +47,11 @@
 
         <div class="title">
           <h1>Medical History</h1>
-          <ul id="history-list"></ul>
         </div>
 
         <div class="content">
 
-          <div id="todos-history">
+          <div id="todos">
             <div class="title">
               <h2>-- History of Present Illness --</h2>
               </div>
@@ -76,6 +77,30 @@
 
       </div>
 
+    <script type="text/javascript">
+      /**
+       * Guiders are created with guider.createGuider({settings}).
+       *
+       * You can show a guider with the .show() method immediately
+       * after creating it, or with guider.show(id) and the guider's id.
+       *
+       * guider.next() will advance to the next guider, and
+       * guider.hideAll() will hide all guiders.
+       *
+       * By default, a button named "Next" will have guider.next as
+       * its onclick handler.  A button named "Close" will have
+       * its onclick handler set to guider.hideAll.  onclick handlers
+       * can be customized too.
+       */
+      guider.createGuider({
+        buttons: [{name: "Close"}],
+        description: "This is an experimental interface for quickly jotting medical information",
+        id: "first",
+        overlay: true,
+        title: "Welcome to MedJot!"
+      }).show();
+
+  </script>
       <!--
     <ul id="instructions">
       <li>Double-click to edit.</li>
@@ -102,12 +127,9 @@
             <div class="todo-move ros">ROS</div>
             <div class="todo-move sh">SH</div>
             <div class="todo-move fh">FH</div>
-            <div class="todo-move all">ALL</div>
             <div class="todo-move meds">MEDS</div>
-            <div class="todo-move psh">PSH</div>
             <div class="todo-move pmh">PMH</div>
             <div class="todo-move hpi">HPI</div>
-            <div class="todo-move cc">CC</div>
           </div>
         </div>
         <div class="edit">
@@ -132,10 +154,9 @@
         </span>
       <% } %>
     </script>
+
     <script type="text/template" id="destination-template">
-      <h2>
-        jot destination: <%= destination %>
-      </h2>
+      <h2>jot destination: <%= destination %></h2>
     </script>
   </body>
 
