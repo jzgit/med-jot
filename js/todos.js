@@ -16,7 +16,8 @@ $(function(){
     defaults: {
       content: "empty todo...",
       done: false,
-      location: "none"
+      location: "undefined",
+      sublocation: "none"
     },
 
     // Ensure that each todo created has `content`.
@@ -26,21 +27,21 @@ $(function(){
       }
     },
 
+
     // Toggle the `done` state of this todo item.
     toggle: function() {
       this.save({done: !this.get("done")});
     },
     
-    // change location of jot the `done` state of this todo item.
-    toggle: function() {
-      this.save({done: !this.get("done")});
-    },
 
     // Remove this Todo from *localStorage* and delete its view.
     clear: function() {
       this.destroy();
       this.view.remove();
-    }
+    },
+
+    //  location methods
+
 
   });
 
@@ -82,7 +83,7 @@ $(function(){
   });
 
   // Create our global collection of **Todos**.
-  window.Todos = new TodoList;
+  window.Todos = new TodoList();
 
   // Todo Item View
   // --------------
@@ -96,10 +97,12 @@ $(function(){
     // Cache the template function for a single item.
     template: _.template($('#item-template').html()),
 
+
     // The DOM events specific to an item.
     events: {
       "click .check"              : "toggleDone",
       "dblclick div.todo-content" : "edit",
+      "click .todo-move"          : "setLocation",
       "click span.todo-destroy"   : "clear",
       "keypress .todo-input"      : "updateOnEnter"
     },
@@ -124,10 +127,17 @@ $(function(){
     // we use `jQuery.text` to set the contents of the todo item.
     setContent: function() {
       var content = this.model.get('content');
+      
       this.$('.todo-content').text(content);
       this.input = this.$('.todo-input');
       this.input.bind('blur', this.close);
       this.input.val(content);
+    },
+
+    // Set location attribute
+    setLocation: function(e) {
+      var location = $(e.target).text();
+      this.model.set({location: location}).save();
     },
 
     // Toggle the `"done"` state of the model.
@@ -176,14 +186,16 @@ $(function(){
     // the App already present in the HTML.
     el: $("#todoapp"),
 
-    // Our template for the line of statistics at the bottom of the app.
-    statsTemplate: _.template($('#stats-template').html()),
+    // destination template
+    //
+    destinationTemplate: _.template($('#destination-template').html()),
+
+
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       "keypress #new-todo":  "createOnEnter",
-      "keyup #new-todo":     "showTooltip",
-      "click .todo-clear a": "clearCompleted"
+      "keyup #new-todo":     "showTooltip"
     },
 
     // At initialization we bind to the relevant events on the `Todos`
@@ -193,6 +205,9 @@ $(function(){
       _.bindAll(this, 'addOne', 'addAll', 'render');
 
       this.input    = this.$("#new-todo");
+
+      this.currentDestination  =  "undefined";
+      this.singleDestination = "";
 
       Todos.bind('add',     this.addOne);
       Todos.bind('reset',   this.addAll);
@@ -204,12 +219,11 @@ $(function(){
     // Re-rendering the App just means refreshing the statistics -- the rest
     // of the app doesn't change.
     render: function() {
-      var done = Todos.done().length;
-      this.$('#todo-stats').html(this.statsTemplate({
-        total:      Todos.length,
-        done:       Todos.done().length,
-        remaining:  Todos.remaining().length
+      
+      this.$('#current-destination').html(this.destinationTemplate({
+        destination     : this.currentDestination
       }));
+
     },
 
     // Add a single todo item to the list by creating a view for it, and
@@ -229,6 +243,7 @@ $(function(){
       return {
         content: this.input.val(),
         order:   Todos.nextOrder(),
+        location: "none",
         done:    false
       };
     },
@@ -237,15 +252,31 @@ $(function(){
     // persisting it to *localStorage*.
     createOnEnter: function(e) {
       if (e.keyCode != 13) return;
-      Todos.create(this.newAttributes());
+      var content = this.input.val();
+
+      // test for flags (.hpi, .ros, ..pmh)
+      // single use flags use '.' -- permanent use '..'
+
+      if (/\.+(cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i.test(content)) {
+        var flag = content.match(/(\.+)(cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i);
+        var location = flag[2].toUpperCase();
+        var f = flag[1].length;
+        var content = content.replace(/\.+(cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i, "");
+
+      };
+
+      if (f == 2) { this.currentDestination = location };
+      if (!f) { location = this.currentDestination };
+      if (location == 'JOT' && f == 2) { this.currentDestination = "undefined" };
+      
+      var attrs = this.newAttributes();
+      attrs.content = content;
+      attrs.location = location;
+
+      Todos.create(attrs);
       this.input.val('');
     },
 
-    // Clear all done todo items, destroying their models.
-    clearCompleted: function() {
-      _.each(Todos.done(), function(todo){ todo.clear(); });
-      return false;
-    },
 
     // Lazily show the tooltip that tells you to press `enter` to save
     // a new todo item, after one second.
@@ -261,7 +292,34 @@ $(function(){
 
   });
 
+
+  window.HistoryView = Backbone.View.extend({
+  
+    el: $('#history'),
+
+    events: {
+
+    },
+
+    initialize: function() {
+      _.bindAll(this, 'render');
+
+      this.render();
+    },
+   
+
+    render: function() {
+      $(this.el).append("<li>hey hey</li>");
+    }
+  
+  
+  
+  });
+
+
   // Finally, we kick things off by creating the **App**.
   window.App = new AppView;
-
+  window.History = new HistoryView;
 });
+
+

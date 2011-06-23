@@ -189,6 +189,9 @@ html {
     font-weight: bold;
     color: #cccccc;
     cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    
    }
     #todo-list li:hover .todo-move {
       display: inline;
