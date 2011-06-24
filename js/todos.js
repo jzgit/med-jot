@@ -103,6 +103,7 @@ $(function(){
       "click .check"              : "toggleDone",
       "dblclick div.todo-content" : "edit",
       "click .todo-move"          : "setLocation",
+      "click span.tag"            : "setLocation",
       "click span.todo-destroy"   : "clear",
       "keypress .todo-input"      : "updateOnEnter"
     },
@@ -197,18 +198,18 @@ $(function(){
       "keypress #new-todo":  "createOnEnter",
       "keyup #new-todo":     "showTooltip",
       "click span#help":         "showHelp",
+      "click .tag" :   "setAutoTag"
     },
 
     // At initialization we bind to the relevant events on the `Todos`
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
-      _.bindAll(this, 'addOne', 'addAll', 'render');
+      _.bindAll(this, 'addOne', 'addAll', 'render', 'setAutoTag');
 
       this.input    = this.$("#new-todo");
 
-      this.currentDestination  =  "undefined";
-      this.singleDestination = "";
+      this.currentDestination  =  "JOT";
 
       Todos.bind('add',             this.addOne);
       Todos.bind('change:location', this.move);
@@ -219,14 +220,20 @@ $(function(){
       Todos.fetch();
     },
 
-    // Re-rendering the App just means refreshing the statistics -- the rest
-    // of the app doesn't change.
-    render: function() {
-      
-      this.$('#current-destination').html(this.destinationTemplate({
-        destination     : this.currentDestination
-      }));
 
+    // Re-rendering the App just means refreshing the current auto-tag
+    //
+    render: function() {
+      var current = this.currentDestination.toLowerCase() ;
+      this.$('#current-destination').html(this.destinationTemplate());
+      this.$('.auto-tag').children().removeClass('current-tag').filter('.' + current).addClass('current-tag');
+
+    },
+    
+    setAutoTag: function(e) {
+      this.input.focus();
+      this.currentDestination = $(e.target).text();
+      this.render();
     },
 
     move: function(todo) {
@@ -235,8 +242,6 @@ $(function(){
       var location = todo.get('location').toLowerCase();
       $(".jot-list").filter('.'+location).append(view.render().el);
 
-      //addOne(todo);
-      //alert(todo.get('content')+ 'wants to move');
     },
 
     // Add a single todo item to the list by creating a view for it, and
@@ -282,11 +287,10 @@ $(function(){
         var flag = content.match(/(\.+)(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i);
         var location = flag[2].toUpperCase();
         var f = flag[1].length;
-        var content = content.replace(/\.+(pt|cc|hpi|pmh|psh|meds|sh|fh|ros|jot)/i, "");
+        var content = content.replace(/\.+(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i, "");
 
       }
       
-      if (location == 'JOT') { location = "undefined" };
       if (f == 2) { this.currentDestination = location };
       if (!f) { location = this.currentDestination };
       

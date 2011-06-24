@@ -17,6 +17,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   vertical-align: baseline;
   -webkit-user-select:none;
   -moz-user-select:none;
+  cursor: default;
 }
 
 
@@ -128,11 +129,13 @@ html {
   color: #CCC;
   float: right;
   margin-right: 0px;
+  cursor: pointer;
 }
+
 
 #jots h3 {
   display: block;
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 
@@ -227,7 +230,7 @@ html {
       background-position: 0 -20px;
     }
     .todo-move {
-    padding: 8px 0px 0 16px;
+    padding: 8px 0px 0px 14px;
     float: right;
     margin: 0;
     display: none;
@@ -247,8 +250,18 @@ html {
       color: #333333;
     }
 
-.auto-tag .todo-move{
+.auto-tag .todo-move {
+  padding-left: 9px;
   display: block;
+}
+
+.auto-tag .todo-move.heading {
+  float: left;
+  padding-left: 0px;
+  cursor: default;
+}
+.auto-tag .todo-move.current-tag {
+  color: #333333;
 }
 
 #current-desintation div {
