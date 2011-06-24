@@ -278,11 +278,11 @@ $(function(){
       // test for flags (.hpi, .ros, ..pmh)
       // single use flags use '.' -- permanent use '..'
 
-      if (/\.+(cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i.test(content)) {
-        var flag = content.match(/(\.+)(cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i);
+      if (/\.+(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i.test(content)) {
+        var flag = content.match(/(\.+)(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i);
         var location = flag[2].toUpperCase();
         var f = flag[1].length;
-        var content = content.replace(/\.+(cc|hpi|pmh|psh|meds|sh|fh|ros|jot)/i, "");
+        var content = content.replace(/\.+(pt|cc|hpi|pmh|psh|meds|sh|fh|ros|jot)/i, "");
 
       }
       

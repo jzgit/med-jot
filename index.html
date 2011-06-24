@@ -21,7 +21,7 @@
       <div id="todoapp">
 
         <div class="title">
-          <h1>MedJot</h1>
+          <h1>Med Jot</h1>
           <span id="help"><b>?</b></span>
         </div>
 
@@ -36,7 +36,10 @@
 
 
           <div id="todos">
-            <ul class="jot-list undefined"></ul>
+            <div id="jots" class="section-title">
+              <h3>Jots<span class="tag">JOT</span></h3>
+            </div>
+            <ul class="jot-list jot undefined"></ul>
           </div>
 
           <div id="todo-stats"></div>
@@ -137,6 +140,7 @@
             <div class="todo-move hpi">HPI</div>
             <div class="todo-move cc">CC</div>
             <div class="todo-move pt">PT</div>
+            <div class="todo-move jot">JOT</div>
           </div>
         </div>
         <div class="edit">
@@ -146,7 +150,19 @@
 
     
     <script type="text/template" id="destination-template">
-      <h2>auto-tag: <%= destination %></h2>
+          <div class="auto-tag">
+            <div class="todo-move ros">ROS</div>
+            <div class="todo-move sh">SH</div>
+            <div class="todo-move fh">FH</div>
+            <div class="todo-move all">ALL</div>
+            <div class="todo-move meds">MEDS</div>
+            <div class="todo-move psh">PSH</div>
+            <div class="todo-move pmh">PMH</div>
+            <div class="todo-move hpi">HPI</div>
+            <div class="todo-move cc">CC</div>
+            <div class="todo-move pt">PT</div>
+            <div class="todo-move jot">JOT</div>
+          </div>
     </script>
   </body>
 
