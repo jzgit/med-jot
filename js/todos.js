@@ -184,7 +184,7 @@ $(function(){
 
     // Instead of generating a new element, bind to the existing skeleton of
     // the App already present in the HTML.
-    el: $("#todoapp"),
+    el: $("#center-app"),
 
     // destination template
     //
@@ -210,9 +210,11 @@ $(function(){
       this.currentDestination  =  "undefined";
       this.singleDestination = "";
 
-      Todos.bind('add',     this.addOne);
-      Todos.bind('reset',   this.addAll);
-      Todos.bind('all',     this.render);
+      Todos.bind('add',             this.addOne);
+      Todos.bind('change:location', this.move);
+      Todos.bind('reset',           this.addAll);
+      Todos.bind('all',             this.render);
+      
 
       Todos.fetch();
     },
@@ -227,11 +229,29 @@ $(function(){
 
     },
 
+    move: function(todo) {
+      todo.view.remove();
+      var view = new TodoView({model: todo});
+      var location = todo.get('location').toLowerCase();
+      $(".jot-list").filter('.'+location).append(view.render().el);
+
+      //addOne(todo);
+      //alert(todo.get('content')+ 'wants to move');
+    },
+
     // Add a single todo item to the list by creating a view for it, and
     // appending its element to the `<ul>`.
+    //
+    // Add the jot to the correct list
+    //
     addOne: function(todo) {
       var view = new TodoView({model: todo});
-      this.$("#todo-list").append(view.render().el);
+      if (todo.get('content').length > 0) {
+        var location = todo.get('location').toLowerCase();
+        $(".jot-list").filter('.'+location).append(view.render().el);
+      } else {
+        todo.view.clear();
+      }
     },
 
     // Add all items in the **Todos** collection at once.
@@ -264,7 +284,7 @@ $(function(){
         var f = flag[1].length;
         var content = content.replace(/\.+(cc|hpi|pmh|psh|meds|sh|fh|ros|jot)/i, "");
 
-      };
+      }
       
       if (location == 'JOT') { location = "undefined" };
       if (f == 2) { this.currentDestination = location };
@@ -300,33 +320,11 @@ $(function(){
   });
 
 
-  window.HistoryView = Backbone.View.extend({
-  
-    el: $('#history'),
 
-    events: {
-
-    },
-
-    initialize: function() {
-      _.bindAll(this, 'render');
-
-      this.render();
-    },
-   
-
-    render: function() {
-      $(this.el).append("<li>hey hey</li>");
-    }
-  
-  
-  
-  });
 
 
   // Finally, we kick things off by creating the **App**.
   window.App = new AppView;
-  window.History = new HistoryView;
 });
 
 

@@ -126,20 +126,20 @@ html {
     margin-left: -85px;
   }
 
-#todo-list {
+.jot-list {
   margin-top: 10px;
 }
-  #todo-list li {
+  .jot-list li {
     padding: 12px 20px 11px 0;
     position: relative;
     font-size: 24px;
     line-height: 1.1em;
     border-bottom: 1px solid #cccccc;
   }
-  #todo-list li:hover {
+  .jot-list li:hover {
     padding: 12px 20px 11px 0px;
   }
-    #todo-list li:after {
+    .jot-list li:after {
       content: "\0020";
       display: block;
       height: 0;
@@ -147,18 +147,18 @@ html {
       overflow: hidden;
       visibility: hidden;
     }
-    #todo-list li.editing {
+    .jot-list li.editing {
       padding: 0;
       border-bottom: 0;
     }
-  #todo-list .editing .display,
-  #todo-list .edit {
+  .jot-list .editing .display,
+  .jot-list .edit {
     display: none;
   }
-    #todo-list .editing .edit {
+    .jot-list .editing .edit {
       display: block;
     }
-    #todo-list .editing input {
+    .jot-list .editing input {
       width: 444px;
       font-size: 24px;
       font-family: inherit;
@@ -173,17 +173,17 @@ html {
       -o-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
       box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
     }
-  #todo-list .check {
+  .jot-list .check {
     position: relative;
     top: 9px;
     margin: 0 10px 0 7px;
     float: left;
   }
-  #todo-list .done .todo-content {
+  .jot-list .done .todo-content {
     text-decoration: line-through;
     color: #777777;
   }
-  #todo-list .todo-destroy {
+  .jot-list .todo-destroy {
     position: absolute;
     right: 0px;
     top: 10px;
@@ -193,13 +193,13 @@ html {
     height: 20px;
     background: url(../destroy.png) no-repeat 0 0;
   }
-    #todo-list li:hover .todo-destroy {
+    .jot-list li:hover .todo-destroy {
       display: block;
     }
-    #todo-list .todo-destroy:hover {
+    .jot-list .todo-destroy:hover {
       background-position: 0 -20px;
     }
-    #todo-list .todo-move {
+    .jot-list .todo-move {
     padding: 8px 0px 0 16px;
     float: right;
     margin: 0;
@@ -213,10 +213,10 @@ html {
     -moz-user-select:none;
     
    }
-    #todo-list li:hover .todo-move {
+    .jot-list li:hover .todo-move {
       display: inline;
     }
-    #todo-list .todo-move:hover {
+    .jot-list .todo-move:hover {
       color: #333333;
     }
 
