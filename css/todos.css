@@ -16,6 +16,22 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   font-family: inherit;
   vertical-align: baseline;
 }
+
+
+    /* inforamation architect's styles */
+address, blockquote, caption, cite, code, dl, 
+figcaption, h1, h2, h3, h4, h5, h6, label, legend,
+ol, p, pre, ul, table {
+
+    display:block;
+    font:normal normal 400 1em/1.5em Georgia,Serif;
+    list-style:none;
+    margin:0 0 1.5em;
+    text-rendering:optimizeLegibility;
+}
+
+
+/*
 body {
   line-height: 1;
   color: black;
@@ -27,14 +43,12 @@ ol, ul {
 a img {
   border: none;
 }
+*/
 
 html {
   background: #eeeeee;
 }
   body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.4em;
     background: #eeeeee;
     color: #333333;
   }
@@ -56,11 +70,15 @@ html {
   box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
 }
   #todoapp h1, #history h1, .guider_content h1 {
+    text-align: center;
+    font-size: 200%;
+    /*
     font-size: 36px;
     font-weight: bold;
     text-align: center;
     padding: 20px 0 30px 0;
     line-height: 1;
+    */
   }
   #todoapp .title {
     position: relative;
@@ -89,13 +107,22 @@ html {
   -o-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
   box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
 }
-  #history h1 {
-    font-size: 36px;
-    font-weight: bold;
-    text-align: center;
-    padding: 20px 0 30px 0;
-    line-height: 1;
-  }
+
+/* IA section headers */
+.section-title h3 {
+  font-size: 125%;
+  line-height: 1.2em;
+  margin: 1.2em 0;
+  border-bottom: 1px solid #ccc;
+}
+.section-title h3 span {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: #CCC;
+  float: right;
+  margin-right: 0px;
+}
 
 
 #create-todo {
@@ -130,14 +157,13 @@ html {
   margin-top: 10px;
 }
   .jot-list li {
-    padding: 12px 20px 11px 0;
+    display: block;
+    /*padding: 12px 20px 11px 0;*/
     position: relative;
-    font-size: 24px;
-    line-height: 1.1em;
-    border-bottom: 1px solid #cccccc;
+    /*border-bottom: 1px solid #cccccc; */
   }
   .jot-list li:hover {
-    padding: 12px 20px 11px 0px;
+    padding: 0px 20px 11px 0px;
   }
     .jot-list li:after {
       content: "\0020";
@@ -173,16 +199,6 @@ html {
       -o-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
       box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
     }
-  .jot-list .check {
-    position: relative;
-    top: 9px;
-    margin: 0 10px 0 7px;
-    float: left;
-  }
-  .jot-list .done .todo-content {
-    text-decoration: line-through;
-    color: #777777;
-  }
   .jot-list .todo-destroy {
     position: absolute;
     right: 0px;
@@ -221,39 +237,6 @@ html {
     }
 
 
-#todo-stats {
-  *zoom: 1;
-  margin-top: 10px;
-  color: #777777;
-}
-  #todo-stats:after {
-    content: "\0020";
-    display: block;
-    height: 0;
-    clear: both;
-    overflow: hidden;
-    visibility: hidden;
-  }
-  #todo-stats .todo-count {
-    float: left;
-  }
-    #todo-stats .todo-count .number {
-      font-weight: bold;
-      color: #333333;
-    }
-  #todo-stats .todo-clear {
-    float: right;
-  }
-    #todo-stats .todo-clear a {
-      color: #777777;
-      font-size: 12px;
-    }
-      #todo-stats .todo-clear a:visited {
-        color: #777777;
-      }
-      #todo-stats .todo-clear a:hover {
-        color: #336699;
-      }
 
 #instructions {
   width: 520px;

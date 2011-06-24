@@ -46,47 +46,47 @@
       </div>
       <div id="history">
 
-          <div class="title">
-            <h1>Medical History</h1>
-          </div>
 
           <div class="content">
 
             <div id="todos">
-              <div class="title">
-                <h2>-- CC --</h2>
+              <div class="section-title">
+                <h3>Patient <span class="tag">PT</span></h3>
+                <ul class="jot-list pt"></ul>
+              <div class="section-title">
+                <h3>Chief Complaint<span class="tag">CC</span></h3>
                 <ul class="jot-list cc"></ul>
               </div>
-              <div class="title">
-                <h2>-- HPI --</h2>
+              <div class="section-title">
+                <h3>History of Present Illness <span class="tag">HPI</span></h3>
                 <ul class="jot-list hpi"></ul>
               </div>
-              <div class="title">
-                <h2>-- PMH --</h2>
+              <div class="section-title">
+                <h3>Past Medical History <span class="tag">PMH</span></h3>
                 <ul class="jot-list pmh"></ul>
               </div>
-              <div class="title">
-                <h2>-- PSH --</h2>
+              <div class="section-title">
+                <h3>Past Surgical History <span class="tag">PSH</span></h3>
                 <ul class="jot-list psh"></ul>
               </div>
-              <div class="title">
-                <h2>-- MEDS --</h2>
+              <div class="section-title">
+                <h3>Medications <span class="tag">MEDS</span></h3>
                 <ul class="jot-list meds"></ul>
               </div>
-              <div class="title">
-                <h2>-- ALL --</h2>
+              <div class="section-title">
+                <h3>Allergies <span class="tag">ALL</span></h3>
                 <ul class="jot-list all"></ul>
               </div>
-              <div class="title">
-                <h2>-- SH --</h2>
+              <div class="section-title">
+                <h3>Social History <span class="tag">SH</span></h3>
                 <ul class="jot-list sh"></ul>
               </div>
-              <div class="title">
-                <h2>-- FH --</h2>
+              <div class="section-title">
+                <h3>Family History <span class="tag">FH</span></h3>
                 <ul class="jot-list fh"></ul>
               </div>
-              <div class="title">
-                <h2>-- ROS --</h2>
+              <div class="section-title">
+                <h3>Review of Systems <span class="tag">ROS</span></h3>
                 <ul class="jot-list ros"></ul>
               </div>
 
@@ -119,25 +119,10 @@
       });
 
   </script>
-      <!--
-    <ul id="instructions">
-      <li>Double-click to edit.</li>
-      <li><a href="../../docs/todos.html">View the annotated source.</a></li>
-    </ul>
-      -->
-
-    <!--
-    <div id="credits">
-      Created by
-      <br />
-      <a href="http://jgn.me/">J&eacute;r&ocirc;me Gravel-Niquet</a>
-    </div>
-    -->
 
     <!-- Templates -->
 
     <script type="text/template" id="item-template">
-      <div class="todo <%= done ? 'done' : '' %>">
         <div class="display">
           <div class="todo-content"></div>
           <span class="todo-destroy"></span>
@@ -151,31 +136,15 @@
             <div class="todo-move pmh">PMH</div>
             <div class="todo-move hpi">HPI</div>
             <div class="todo-move cc">CC</div>
+            <div class="todo-move pt">PT</div>
           </div>
         </div>
         <div class="edit">
           <input class="todo-input" type="text" value="" />
         </div>
-      </div>
     </script>
 
-    <script type="text/template" id="stats-template">
-      <% if (total) { %>
-        <span class="todo-count">
-          <span class="number"><%= remaining %></span>
-          <span class="word"><%= remaining == 1 ? 'item' : 'items' %></span> left.
-        </span>
-      <% } %>
-      <% if (done) { %>
-        <span class="todo-clear">
-          <a href="#">
-            Clear <span class="number-done"><%= done %></span>
-            completed <span class="word-done"><%= done == 1 ? 'item' : 'items' %></span>
-          </a>
-        </span>
-      <% } %>
-    </script>
-
+    
     <script type="text/template" id="destination-template">
       <h2>auto-tag: <%= destination %></h2>
     </script>
