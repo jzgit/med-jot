@@ -78,6 +78,7 @@ html {
     font-family: museo-sans,sans-serif;
     font-style: normal;
     font-weight: 900;
+    margin-bottom: 1em;
     
     /*
     font-size: 36px;
@@ -91,11 +92,12 @@ html {
     position: relative;
   }
   #help {
-  font-size: 18px;
+  font-size: 22px;
   position: absolute;
   top: 5px;
   right: 5px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: museo-sans, sans-serif;
+  font-weight: 700;
   color: #cccccc;
   cursor: pointer;
   }
