@@ -38,13 +38,10 @@ $(function(){
     clear: function() {
       this.destroy();
       this.view.remove();
-    },
-
-    //  location methods
-
-
+    }
   });
 
+ 
   // Todo Collection
   // ---------------
 
@@ -84,6 +81,15 @@ $(function(){
 
   // Create our global collection of **Todos**.
   window.Todos = new TodoList();
+
+  // Review of Systems View
+  window.RosView = Backbone.View.extend({
+    
+    tagName: "li",
+
+    
+  });
+
 
   // Todo Item View
   // --------------
@@ -196,9 +202,9 @@ $(function(){
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       "keypress #new-todo":  "createOnEnter",
-      "keyup #new-todo":     "showTooltip",
-      "click span#help":         "showHelp",
-      "click .tag" :   "setAutoTag"
+      "keyup #new-todo":     "checkText",
+      "click span#help":     "showHelp",
+      "click .tag" :         "setAutoTag",
     },
 
     // At initialization we bind to the relevant events on the `Todos`
@@ -227,7 +233,7 @@ $(function(){
       var current = this.currentDestination.toLowerCase() ;
       this.$('#current-destination').html(this.destinationTemplate());
       this.$('.auto-tag').children().removeClass('current-tag').filter('.' + current).addClass('current-tag');
-
+      this.toggleDetails(current);
     },
     
     setAutoTag: function(e) {
@@ -307,6 +313,8 @@ $(function(){
       $("#guider_overlay").fadeIn("fast");
       $('.guider').fadeIn("fast");
     },
+
+
     
 
     // Lazily show the tooltip that tells you to press `enter` to save
@@ -315,20 +323,46 @@ $(function(){
       var tooltip = this.$(".ui-tooltip-top");
       var val = this.input.val();
       tooltip.fadeOut();
+
+      //alert(val); //this.view.checkText();
+
       if (this.tooltipTimeout) clearTimeout(this.tooltipTimeout);
       if (val == '' || val == this.input.attr('placeholder')) return;
       var show = function(){ tooltip.show().fadeIn(); };
       this.tooltipTimeout = _.delay(show, 1000);
-    }
+    },
 
+    // on keyup check input box for commands flags shortcuts
+    checkText: function(e) {
+      var val = this.input.val();
+      
+      if (e.keyCode != 13 && val.length > 1) {
+        //if () {this.toggleDetails()};
+
+      };
+      
+      // call tooltip that was bound to key (wasnt able to bind to events to keyup) //
+      this.showTooltip(e);
+    
+    },
+
+    // toggle details container below input for extras
+    toggleDetails: function(current) {
+      this.$('.details').hide();
+      this.$('.' + current + '-container').show();
+
+    }
   });
 
 
 
 
 
-  // Finally, we kick things off by creating the **App**.
+  // Finally, we kick things off by creating the **App**
   window.App = new AppView;
+
+  //alert(ros.skin);
+
 });
 
 
