@@ -32,7 +32,7 @@ $(function(){
     toggle: function() {
       this.save({done: !this.get("done")});
     },
-    
+
 
     // Remove this Todo from *localStorage* and delete its view.
     clear: function() {
@@ -41,7 +41,7 @@ $(function(){
     }
   });
 
- 
+
   // Todo Collection
   // ---------------
 
@@ -79,17 +79,45 @@ $(function(){
 
   });
 
-  // Create our global collection of **Todos**.
-  window.Todos = new TodoList();
+  window.Todos = new TodoList;
 
-  // Review of Systems View
+  // Review of systems View
+
   window.RosView = Backbone.View.extend({
-    
-    tagName: "li",
 
-    
+    el:  $('.ros-container'),
+
+    tagName:  "div",
+
+    template: _.template($('#ros-section').html()),
+
+    events:   {},
+
+    initialize: function() {
+      _.bindAll(this, 'render');
+
+      //this.render(this.test);
+      this.renderSection();
+    },
+
+    render: function(x) {
+      this.renderSection(x);
+      return this;
+    },
+
+    renderSection: function() {
+      var section = $(this.el).html(this.template());
+    },
+
+    renderItem: function(x) {
+      $('.ros-items').html(this.templateItem(x));
+
+    }
+
+
   });
 
+  window.Ros = new RosView;
 
   // Todo Item View
   // --------------
@@ -134,7 +162,7 @@ $(function(){
     // we use `jQuery.text` to set the contents of the todo item.
     setContent: function() {
       var content = this.model.get('content');
-      
+
       this.$('.todo-content').text(content);
       this.input = this.$('.todo-input');
       this.input.bind('blur', this.close);
@@ -221,7 +249,7 @@ $(function(){
       Todos.bind('change:location', this.move);
       Todos.bind('reset',           this.addAll);
       Todos.bind('all',             this.render);
-      
+
 
       Todos.fetch();
     },
@@ -235,7 +263,7 @@ $(function(){
       this.$('.auto-tag').children().removeClass('current-tag').filter('.' + current).addClass('current-tag');
       this.toggleDetails(current);
     },
-    
+
     setAutoTag: function(e) {
       this.input.focus();
       this.currentDestination = $(e.target).text();
@@ -296,10 +324,10 @@ $(function(){
         var content = content.replace(/\.+(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i, "");
 
       }
-      
+
       if (f == 2) { this.currentDestination = location };
       if (!f) { location = this.currentDestination };
-      
+
       var attrs = this.newAttributes();
       attrs.content = content;
       attrs.location = location;
@@ -307,7 +335,7 @@ $(function(){
       Todos.create(attrs);
       this.input.val('');
     },
-    
+
     // reshow help menu
     showHelp: function() {
       $("#guider_overlay").fadeIn("fast");
@@ -315,35 +343,16 @@ $(function(){
     },
 
 
-    
-
-    // Lazily show the tooltip that tells you to press `enter` to save
-    // a new todo item, after one second.
-    showTooltip: function(e) {
-      var tooltip = this.$(".ui-tooltip-top");
-      var val = this.input.val();
-      tooltip.fadeOut();
-
-      //alert(val); //this.view.checkText();
-
-      if (this.tooltipTimeout) clearTimeout(this.tooltipTimeout);
-      if (val == '' || val == this.input.attr('placeholder')) return;
-      var show = function(){ tooltip.show().fadeIn(); };
-      this.tooltipTimeout = _.delay(show, 1000);
-    },
-
     // on keyup check input box for commands flags shortcuts
     checkText: function(e) {
       var val = this.input.val();
-      
+
       if (e.keyCode != 13 && val.length > 1) {
         //if () {this.toggleDetails()};
 
       };
-      
-      // call tooltip that was bound to key (wasnt able to bind to events to keyup) //
-      this.showTooltip(e);
-    
+
+
     },
 
     // toggle details container below input for extras
@@ -361,7 +370,6 @@ $(function(){
   // Finally, we kick things off by creating the **App**
   window.App = new AppView;
 
-  //alert(ros.skin);
 
 });
 
