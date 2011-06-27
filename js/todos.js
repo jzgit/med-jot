@@ -348,7 +348,7 @@ $(function(){
       var val = this.input.val();
 
       if (e.keyCode != 13 && val.length > 1) {
-        //if () {this.toggleDetails()};
+        //alert('jason');
 
       };
 
