@@ -87,12 +87,12 @@
        * can be customized too.
        */
     guider.createGuider({
-buttons: [{name: "Close"}],
-description: "MedJot is an experimental interface for quickly recording medical information.  It allows documentation to follow the natural flow of conversation.<br /><br />A jot is a single chunk of information.  They are organized by categories, which mimic the normal sections of a medical history form.  While entering a jot you may attach a category tag by typing \"<b>.</b>\" followed by the category abbreviation. An automatic tag is applied if one is not entered.  This auto-tag can be changed from its default of undefined by typing \"<b>..</b>\" followed by the category abbreviation and is reset to undefined with \"<b>..jot</b>\".  The undefined category allows you to quickly collect lots of jots for later classification.<br /><br /><b>Example:</b><br />Mr Jones is a 68 yo man from Philadelphia  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : undefined]<br />Presents with substernal chest pain <b>.hpi</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : HPI]<br />The pain began while walking up stairs <b>..hpi</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : HPI]<br />Pt did not eat or take his meds today  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : HPI]<br />Lipitor 20mg and aspirin 81mg, daily <b>.meds</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : MEDS]<br />The patient experienced shortness of breath &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [auto-tag : HPI]<br />Hospitalization in 2006 for heart attack <b>..pmh</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : PMH]<br />Hypertension, hyperlipidemia, and diabetes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : PMH]<br /><br /><b>Categories:</b><br />CC (chief complaint), HPI (history of present illness), PMH (past medical history), PSH (past surgical history), MEDS (medications), ALL (allergies), SH (social history), FH (family history), ROS (review of systems), JOT (undefined)<br /><br /><b>tip:</b> you can type the category abbreviation at the beginning, middle, or end.",
-id: "first",
-overlay: true,
-title: "Welcome to MedJot"
-});
+      buttons: [{name: "Close"}],
+      description: "MedJot is an experimental interface for quickly recording medical information.  It allows documentation to follow the natural flow of conversation.<br /><br />A jot is a single chunk of information.  They are organized by categories, which mimic the normal sections of a medical history form.  The current category tag is applied when you enter your jot.  To change the tag, type \"<b>.</b>\" followed by the category abbreviation (even if you're in the middle of entering a jot).  The JOT category allows you to quickly collect lots of jots for later classification.<br /><br /><b>Example:</b><br />Mr Jones is a 68 yo man from Philadelphia  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : JOT]<br />Presents with substernal chest pain <b>.hpi</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : HPI]<br />The pain began while walking up stairs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : HPI]<br />Lipitor 20mg and aspirin 81mg, daily <b>.meds</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;[tag : MEDS]<br />Hypertension, hyperlipidemia, and diabetes <b>.pmh</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : PMH]<br /><br /><b>Categories:</b><br />PT (general patient information), CC (chief complaint), HPI (history of present illness), PMH (past medical history), PSH (past surgical history), MEDS (medications), ALL (allergies), SH (social history), FH (family history), ROS (review of systems), JOT (jot)<br />",
+      id: "first",
+      overlay: true,
+      title: "Welcome to MedJot"
+    }).show();
 
 </script>
 
@@ -174,7 +174,7 @@ title: "Welcome to MedJot"
     <div class="tag todo-move cc">CC</div>
     <div class="tag todo-move pt">PT</div>
     <div class="tag todo-move jot">JOT</div>
-    <div class="todo-move heading">AUTO-TAG:</div>
+    <div class="todo-move heading">TAG:</div>
   </div>
 </script>
 
