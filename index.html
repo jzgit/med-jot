@@ -12,6 +12,7 @@
     <script src="js/backbone-localstorage.js"></script>
     <script src="js/guider.js"></script>
     <script src="js/review-of-systems.js"></script>
+    <script src="js/history.js"></script>
     <script src="js/todos.js"></script>
 
     <!-- typekit -->
@@ -51,16 +52,7 @@
           <div class="details sh-container"></div>
           <div class="details fh-container"></div>
 
-
           <div class="details ros-container"></div>
-
-
-
-
-
-
-
-
         </div>
 
         <div id="todos">
@@ -74,151 +66,118 @@
 
       </div>
 
-    </div>
     <div id="history">
+      <div class="history-content"></div>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+      /**
+       * Guiders are created with guider.createGuider({settings}).
+       *
+       * You can show a guider with the .show() method immediately
+       * after creating it, or with guider.show(id) and the guider's id.
+       *
+       * guider.next() will advance to the next guider, and
+       * guider.hideAll() will hide all guiders.
+       *
+       * By default, a button named "Next" will have guider.next as
+       * its onclick handler.  A button named "Close" will have
+       * its onclick handler set to guider.hideAll.  onclick handlers
+       * can be customized too.
+       */
+    guider.createGuider({
+buttons: [{name: "Close"}],
+description: "MedJot is an experimental interface for quickly recording medical information.  It allows documentation to follow the natural flow of conversation.<br /><br />A jot is a single chunk of information.  They are organized by categories, which mimic the normal sections of a medical history form.  While entering a jot you may attach a category tag by typing \"<b>.</b>\" followed by the category abbreviation. An automatic tag is applied if one is not entered.  This auto-tag can be changed from its default of undefined by typing \"<b>..</b>\" followed by the category abbreviation and is reset to undefined with \"<b>..jot</b>\".  The undefined category allows you to quickly collect lots of jots for later classification.<br /><br /><b>Example:</b><br />Mr Jones is a 68 yo man from Philadelphia  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : undefined]<br />Presents with substernal chest pain <b>.hpi</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : HPI]<br />The pain began while walking up stairs <b>..hpi</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : HPI]<br />Pt did not eat or take his meds today  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : HPI]<br />Lipitor 20mg and aspirin 81mg, daily <b>.meds</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : MEDS]<br />The patient experienced shortness of breath &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [auto-tag : HPI]<br />Hospitalization in 2006 for heart attack <b>..pmh</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : PMH]<br />Hypertension, hyperlipidemia, and diabetes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : PMH]<br /><br /><b>Categories:</b><br />CC (chief complaint), HPI (history of present illness), PMH (past medical history), PSH (past surgical history), MEDS (medications), ALL (allergies), SH (social history), FH (family history), ROS (review of systems), JOT (undefined)<br /><br /><b>tip:</b> you can type the category abbreviation at the beginning, middle, or end.",
+id: "first",
+overlay: true,
+title: "Welcome to MedJot"
+});
+
+</script>
+
+<!-- Templates -->
+
+<script type="text/template" id="item-template">
+  <div class="display">
+    <div class="todo-content"></div>
+    <span class="todo-destroy"></span>
+    <div class="moves">
+      <div class="todo-move ros">ROS</div>
+      <div class="todo-move sh">SH</div>
+      <div class="todo-move fh">FH</div>
+      <div class="todo-move all">ALL</div>
+      <div class="todo-move meds">MEDS</div>
+      <div class="todo-move psh">PSH</div>
+      <div class="todo-move pmh">PMH</div>
+      <div class="todo-move hpi">HPI</div>
+      <div class="todo-move cc">CC</div>
+      <div class="todo-move pt">PT</div>
+      <div class="todo-move jot">JOT</div>
+    </div>
+  </div>
+  <div class="edit">
+    <input class="todo-input" type="text" value="" />
+  </div>
+</script>
 
 
-      <div class="content">
+<!-- ROS template - build keyCodes for each category-->
 
-        <div id="todos">
-          <div class="section-title">
-            <h3>Patient <span class="tag">PT</span></h3>
-            <ul class="jot-list pt"></ul>
-            <div class="section-title">
-              <h3>Chief Complaint<span class="tag">CC</span></h3>
-              <ul class="jot-list cc"></ul>
-            </div>
-            <div class="section-title">
-              <h3>History of Present Illness <span class="tag">HPI</span></h3>
-              <ul class="jot-list hpi"></ul>
-            </div>
-            <div class="section-title">
-              <h3>Past Medical History <span class="tag">PMH</span></h3>
-              <ul class="jot-list pmh"></ul>
-            </div>
-            <div class="section-title">
-              <h3>Past Surgical History <span class="tag">PSH</span></h3>
-              <ul class="jot-list psh"></ul>
-            </div>
-            <div class="section-title">
-              <h3>Medications <span class="tag">MEDS</span></h3>
-              <ul class="jot-list meds"></ul>
-            </div>
-            <div class="section-title">
-              <h3>Allergies <span class="tag">ALL</span></h3>
-              <ul class="jot-list all"></ul>
-            </div>
-            <div class="section-title">
-              <h3>Social History <span class="tag">SH</span></h3>
-              <ul class="jot-list sh"></ul>
-            </div>
-            <div class="section-title">
-              <h3>Family History <span class="tag">FH</span></h3>
-              <ul class="jot-list fh"></ul>
-            </div>
-            <div class="section-title">
-              <h3>Review of Systems <span class="tag">ROS</span></h3>
-              <ul class="jot-list ros"></ul>
-            </div>
+<script type="text/template" id="ros-section">
+  <% _(ros).each( function(s) { %>
+    <div  class="ros-section">
+      <h3><%= s.title %></h3>
+      <div class="ros-items">
 
+        <% var keyCodes = _.map(alphabet, function(l) { return s.key + l }); %>
+
+        <% var zipped = _.zip(keyCodes, s.content); %>
+        <% _.each(zipped , function(x) { %>
+
+
+          <% if (x[1]) %>
+          <div class="ros-item">
+            <div class="ros-state"><%= x[0] %></div>
+            <div class="ros-content"><%= x[1] %></div>
           </div>
 
-        </div>
+          <% }); %>
+
       </div>
+    </div> <% }); %>
 
-      <script type="text/javascript">
-        /**
-         * Guiders are created with guider.createGuider({settings}).
-         *
-         * You can show a guider with the .show() method immediately
-         * after creating it, or with guider.show(id) and the guider's id.
-         *
-         * guider.next() will advance to the next guider, and
-         * guider.hideAll() will hide all guiders.
-         *
-         * By default, a button named "Next" will have guider.next as
-         * its onclick handler.  A button named "Close" will have
-         * its onclick handler set to guider.hideAll.  onclick handlers
-         * can be customized too.
-         */
-        guider.createGuider({
-          buttons: [{name: "Close"}],
-          description: "MedJot is an experimental interface for quickly recording medical information.  It allows documentation to follow the natural flow of conversation.<br /><br />A jot is a single chunk of information.  They are organized by categories, which mimic the normal sections of a medical history form.  While entering a jot you may attach a category tag by typing \"<b>.</b>\" followed by the category abbreviation. An automatic tag is applied if one is not entered.  This auto-tag can be changed from its default of undefined by typing \"<b>..</b>\" followed by the category abbreviation and is reset to undefined with \"<b>..jot</b>\".  The undefined category allows you to quickly collect lots of jots for later classification.<br /><br /><b>Example:</b><br />Mr Jones is a 68 yo man from Philadelphia  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : undefined]<br />Presents with substernal chest pain <b>.hpi</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : HPI]<br />The pain began while walking up stairs <b>..hpi</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : HPI]<br />Pt did not eat or take his meds today  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : HPI]<br />Lipitor 20mg and aspirin 81mg, daily <b>.meds</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[tag : MEDS]<br />The patient experienced shortness of breath &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [auto-tag : HPI]<br />Hospitalization in 2006 for heart attack <b>..pmh</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : PMH]<br />Hypertension, hyperlipidemia, and diabetes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[auto-tag : PMH]<br /><br /><b>Categories:</b><br />CC (chief complaint), HPI (history of present illness), PMH (past medical history), PSH (past surgical history), MEDS (medications), ALL (allergies), SH (social history), FH (family history), ROS (review of systems), JOT (undefined)<br /><br /><b>tip:</b> you can type the category abbreviation at the beginning, middle, or end.",
-          id: "first",
-          overlay: true,
-          title: "Welcome to MedJot"
-        });
+</script>
 
-        </script>
+<!-- template for sections of history -->
+<script type="text/template" id="history-template">
+  <% _(sections).each( function(v,k,list) { 
+    var smallv = v.toLowerCase(); %>
+    <div class="section-title ">
+      <h3><%= k %><span class="tag "><%= v %></span></h3>
+      <ul class="jot-list <%= smallv %>"><li></li></ul>
+    </div>
+    <%  });%>
+</script>
 
-        <!-- Templates -->
-
-        <script type="text/template" id="item-template">
-          <div class="display">
-            <div class="todo-content"></div>
-            <span class="todo-destroy"></span>
-            <div class="moves">
-              <div class="todo-move ros">ROS</div>
-              <div class="todo-move sh">SH</div>
-              <div class="todo-move fh">FH</div>
-              <div class="todo-move all">ALL</div>
-              <div class="todo-move meds">MEDS</div>
-              <div class="todo-move psh">PSH</div>
-              <div class="todo-move pmh">PMH</div>
-              <div class="todo-move hpi">HPI</div>
-              <div class="todo-move cc">CC</div>
-              <div class="todo-move pt">PT</div>
-              <div class="todo-move jot">JOT</div>
-            </div>
-          </div>
-          <div class="edit">
-            <input class="todo-input" type="text" value="" />
-          </div>
-        </script>
+<!-- auto tag template -->
+<script type="text/template" id="destination-template">
+  <div class="auto-tag">
+    <div class="tag todo-move ros">ROS</div>
+    <div class="tag todo-move sh">SH</div>
+    <div class="tag todo-move fh">FH</div>
+    <div class="tag todo-move all">ALL</div>
+    <div class="tag todo-move meds">MEDS</div>
+    <div class="tag todo-move psh">PSH</div>
+    <div class="tag todo-move pmh">PMH</div>
+    <div class="tag todo-move hpi">HPI</div>
+    <div class="tag todo-move cc">CC</div>
+    <div class="tag todo-move pt">PT</div>
+    <div class="tag todo-move jot">JOT</div>
+    <div class="todo-move heading">AUTO-TAG:</div>
+  </div>
+</script>
 
 
-        <!-- ROS template -->
-
-        <script type="text/template" id="ros-section">
-          <% _(ros).each( function(s) { %>
-            <div  class="ros-section">
-              <h3><%= s.title %></h3>
-              <div class="ros-items">
-
-                <% var keyCodes = _.map(alphabet, function(l) { return s.key + l }); %>
-
-                <% var zipped = _.zip(keyCodes, s.content); %>
-                <% _.each(zipped , function(x) { %>
-
-                  <% if (x[1]) %>
-                  <div class="ros-item">
-                    <div class="ros-state"><%= x[0] %></div>
-                    <div class="ros-content"><%= x[1] %></div>
-                  </div>
-
-                  <% }); %>
-
-              </div>
-            </div> <% }); %>
-
-        </script>
-
-        <!-- auto tag template -->
-        <script type="text/template" id="destination-template">
-          <div class="auto-tag">
-            <div class="tag todo-move ros">ROS</div>
-            <div class="tag todo-move sh">SH</div>
-            <div class="tag todo-move fh">FH</div>
-            <div class="tag todo-move all">ALL</div>
-            <div class="tag todo-move meds">MEDS</div>
-            <div class="tag todo-move psh">PSH</div>
-            <div class="tag todo-move pmh">PMH</div>
-            <div class="tag todo-move hpi">HPI</div>
-            <div class="tag todo-move cc">CC</div>
-            <div class="tag todo-move pt">PT</div>
-            <div class="tag todo-move jot">JOT</div>
-            <div class="todo-move heading">AUTO-TAG:</div>
-          </div>
-        </script>
   </body>
 </html>

@@ -1,7 +1,5 @@
-// An example Backbone application contributed by
-// [Jérôme Gravel-Niquet](http://jgn.me/). This demo uses a simple
-// [LocalStorage adapter](backbone-localstorage.html)
-// to persist Backbone models within your browser.
+// Med Jot was built on top of Jerome Gravel-Niquet's Todo demo
+// It uses LocalStorage to persist data in your browser
 
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(function(){
@@ -81,40 +79,47 @@ $(function(){
 
   window.Todos = new TodoList;
 
+
+  // history view
+  //
+  window.HistoryView = Backbone.View.extend({
+    el:           $('.history-content'),
+    tagName:  "div",
+    template: _.template($('#history-template').html()),
+    events:       {},
+
+    
+    initialize: function() {
+      _.bindAll(this, 'render');
+      this.render();
+    },
+
+    render: function() {
+      $(this.el).html(this.template());
+      return this;
+    }
+  });
+
+  window.History = new HistoryView;
+  
   // Review of systems View
 
   window.RosView = Backbone.View.extend({
 
     el:  $('.ros-container'),
-
     tagName:  "div",
-
     template: _.template($('#ros-section').html()),
-
     events:   {},
 
     initialize: function() {
       _.bindAll(this, 'render');
-
-      //this.render(this.test);
-      this.renderSection();
+      this.render();
     },
 
-    render: function(x) {
-      this.renderSection(x);
+    render: function() {
+      $(this.el).html(this.template());
       return this;
-    },
-
-    renderSection: function() {
-      var section = $(this.el).html(this.template());
-    },
-
-    renderItem: function(x) {
-      $('.ros-items').html(this.templateItem(x));
-
     }
-
-
   });
 
   window.Ros = new RosView;
@@ -244,6 +249,7 @@ $(function(){
       this.input    = this.$("#new-todo");
 
       this.currentDestination  =  "JOT";
+      this.currentROS = 0;
 
       Todos.bind('add',             this.addOne);
       Todos.bind('change:location', this.move);
@@ -313,24 +319,9 @@ $(function(){
     createOnEnter: function(e) {
       if (e.keyCode != 13) return;
       var content = this.input.val();
-
-      // test for flags (.hpi, .ros, ..pmh)
-      // single use flags use '.' -- permanent use '..'
-
-      if (/\.+(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i.test(content)) {
-        var flag = content.match(/(\.+)(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i);
-        var location = flag[2].toUpperCase();
-        var f = flag[1].length;
-        var content = content.replace(/\.+(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i, "");
-
-      }
-
-      if (f == 2) { this.currentDestination = location };
-      if (!f) { location = this.currentDestination };
-
       var attrs = this.newAttributes();
       attrs.content = content;
-      attrs.location = location;
+      attrs.location = this.currentDestination;
 
       Todos.create(attrs);
       this.input.val('');
@@ -346,12 +337,39 @@ $(function(){
     // on keyup check input box for commands flags shortcuts
     checkText: function(e) {
       var val = this.input.val();
+      
+      // test for flags (.hpi, .ros, .pmh)
 
-      if (e.keyCode != 13 && val.length > 1) {
-        //alert('jason');
+      if (/\.(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i.test(val)) {
+        var flag = val.match(/\.(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i);
+        this.currentDestination = flag[1].toUpperCase();
+        var val = val.replace(/\.(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i, "");
+        this.input.val(val);
+        this.render();
+        
+      };
+
+      // ROS section controls
+      // use '>' and '<' to cycle through sections (current + next 3)
+      if (e.keyCode != 13 && val.length > 0 && this.currentDestination == 'ROS') {
+        var c = this.currentROS;
+        if (/</.test(val)) { (c == 0) ? c = 0 : c -= 1 };
+        if (/>/.test(val)) { (c > 13) ? c : c += 1 };
+        this.currentROS = c;
+        var val = val.replace(/(<|>)/i, "");
+        this.input.val(val);
+        this.showROS();
 
       };
 
+
+    },
+
+    // show active ROS sections (have too many sections to show all at once)
+    showROS: function() {
+      var sections = this.$('.ros-container').children().hide();
+      var start = this.currentROS;
+      sections.slice(start,start+4).show();
 
     },
 
@@ -359,7 +377,7 @@ $(function(){
     toggleDetails: function(current) {
       this.$('.details').hide();
       this.$('.' + current + '-container').show();
-
+      this.showROS();
     }
   });
 
