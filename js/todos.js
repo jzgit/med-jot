@@ -366,7 +366,7 @@ $(function(){
         this.showROS();
         this.input.val(val);
         
-        if ((/\w/i).test(val)) {
+        if ((/\w/i).test(val) && !(/\./).test(val)) {
           //highlight section on first letter
 
           // get index to set showROS
@@ -389,12 +389,12 @@ $(function(){
 
               this.currentROS = rosItem.parent().addClass('last-ros').parent().parent().index();
             };
-                
             this.input.val('');
             //alert(i);
             //this.currentROS = index;
             this.showROS();
           };
+        
         };
 
 
