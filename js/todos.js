@@ -54,9 +54,6 @@ $(function(){
     localStorage: new Store("jot"),
 
     // Filter down the list of all todo items that are finished.
-    done: function() {
-      return this.filter(function(todo){ return todo.get('done'); });
-    },
 
     // Filter down the list to only todo items that are still not finished.
     remaining: function() {
@@ -244,7 +241,7 @@ $(function(){
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
-      _.bindAll(this, 'addOne', 'addAll', 'render', 'setAutoTag');
+      _.bindAll(this, 'addOne', 'addAll', 'render', 'setAutoTag', 'move', 'checkText', 'showROS', 'toggleDetails');
 
       this.input    = this.$("#new-todo");
 
@@ -336,6 +333,8 @@ $(function(){
 
     // on keyup check input box for commands flags shortcuts
     checkText: function(e) {
+
+
       var val = this.input.val();
       
       // test for flags (.hpi, .ros, .pmh)
@@ -343,22 +342,61 @@ $(function(){
       if (/\.(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i.test(val)) {
         var flag = val.match(/\.(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i);
         this.currentDestination = flag[1].toUpperCase();
-        var val = val.replace(/\.(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i, "");
+        val = val.replace(/\.(pt|cc|hpi|pmh|psh|meds|all|sh|fh|ros|jot)/i, "");
         this.input.val(val);
         this.render();
+        //this.toggleDetails();
         
       };
 
       // ROS section controls
       // use '>' and '<' to cycle through sections (current + next 3)
-      if (e.keyCode != 13 && val.length > 0 && this.currentDestination == 'ROS') {
+      // set of keycodes ["A","D","S","F","J","K","L","E","W","C","M","P","G","H", "W", "B", "N", "P"]
+      if (this.currentDestination == 'ROS') {
+        // remove previous highlights
+
+        this.$('.ros-state').removeClass('highlight-keycode');
+        this.$('.ros-item').removeClass('last-ros');
+        // cycle ROS
         var c = this.currentROS;
         if (/</.test(val)) { (c == 0) ? c = 0 : c -= 1 };
         if (/>/.test(val)) { (c > 13) ? c : c += 1 };
         this.currentROS = c;
-        var val = val.replace(/(<|>)/i, "");
-        this.input.val(val);
+        val = val.replace(/(<|>)/i, "");
         this.showROS();
+        this.input.val(val);
+        
+        if ((/\w/i).test(val)) {
+          //highlight section on first letter
+
+          // get index to set showROS
+          //this.currentROS = _.indexOf(alphabet,val);
+          this.$('.'+ val).addClass('highlight-keycode');
+          
+          if ((/\w\w/i).test(val)) {
+
+            val = val.toUpperCase();
+            var rosItem = this.$('.' + val);
+
+            // toggles yes/no/unasked
+            if (rosItem.hasClass('ros-yes')) {
+              rosItem.removeClass('ros-yes').filter('.ros-content').addClass('ros-no');
+            } else if (rosItem.hasClass('ros-no')) {
+              rosItem.removeClass('ros-no');
+            } else {
+              rosItem.filter('.icon').addClass('ros-yes');
+            };
+
+            this.currentROS = rosItem.parent().addClass('last-ros').parent().parent().index();
+
+            this.input.val('');
+            //alert(i);
+            //this.currentROS = index;
+            this.showROS();
+          };
+        };
+
+
 
       };
 
@@ -368,8 +406,8 @@ $(function(){
     // show active ROS sections (have too many sections to show all at once)
     showROS: function() {
       var sections = this.$('.ros-container').children().hide();
-      var start = this.currentROS;
-      sections.slice(start,start+4).show();
+      var start = this.currentROS > 1 ? this.currentROS : 1;
+      sections.slice(start-1,start+3).show();
 
     },
 

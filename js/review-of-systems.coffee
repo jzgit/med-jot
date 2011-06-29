@@ -76,5 +76,5 @@ root.ros =
     title: "psych"
 
 
-root.alphabet = ["A","D","S","F","J","K","L","E","W","C","M","P","G","H"]
+root.alphabet = ["A","D","S","F","J","K","L","E","W","C","M","P","G","H", "W", "B", "N", "P"]
 

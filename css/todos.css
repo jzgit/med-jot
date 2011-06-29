@@ -184,7 +184,6 @@ html {
 
   float: left;
   position: relative;
-  padding-left: 8px;
   }
 
 .ros-section {
@@ -200,6 +199,30 @@ html {
   -webkit-user-select:none;
   -moz-user-select:none;
 }
+
+.icon {
+  padding: 5px 0 0 2px ;
+}
+
+.ros-no {
+  text-decoration: line-through;
+}
+
+.ros-yes {
+  background: url(../59.png) no-repeat 0 0;
+  background-position: center;
+  width: 16px;
+  height: 11px;
+  padding: 5px 0 0 2px ;
+  position: block;
+
+}
+
+.last-ros {
+  background-color: #FFFF9E;
+}
+
+
 
 .jot-list {
   margin-top: 10px;
@@ -294,9 +317,15 @@ html {
   padding-left: 0px;
   cursor: default;
 }
-.auto-tag .todo-move.current-tag {
+.current-tag {
   color: #333333;
 }
+
+.highlight-keycode {
+  color: #333333;
+}
+
+
 
 #current-desintation div {
   display: block;
