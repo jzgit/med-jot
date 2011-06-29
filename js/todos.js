@@ -370,25 +370,26 @@ $(function(){
           //highlight section on first letter
 
           // get index to set showROS
-          //this.currentROS = _.indexOf(alphabet,val);
-          this.$('.'+ val).addClass('highlight-keycode');
-          
+          this.$('.'+ val.toUpperCase()).addClass('highlight-keycode');
           if ((/\w\w/i).test(val)) {
 
             val = val.toUpperCase();
             var rosItem = this.$('.' + val);
+            var potentialROS = rosItem.parent().parent().parent().index();
+            
+            if (this.currentROS-1 <= potentialROS && potentialROS <= this.currentROS + 2) {
+              // toggles yes/no/unasked
+              if (rosItem.hasClass('ros-yes')) {
+                rosItem.removeClass('ros-yes').filter('.ros-content').addClass('ros-no');
+              } else if (rosItem.hasClass('ros-no')) {
+                rosItem.removeClass('ros-no');
+              } else {
+                rosItem.filter('.icon').addClass('ros-yes');
+              };
 
-            // toggles yes/no/unasked
-            if (rosItem.hasClass('ros-yes')) {
-              rosItem.removeClass('ros-yes').filter('.ros-content').addClass('ros-no');
-            } else if (rosItem.hasClass('ros-no')) {
-              rosItem.removeClass('ros-no');
-            } else {
-              rosItem.filter('.icon').addClass('ros-yes');
+              this.currentROS = rosItem.parent().addClass('last-ros').parent().parent().index();
             };
-
-            this.currentROS = rosItem.parent().addClass('last-ros').parent().parent().index();
-
+                
             this.input.val('');
             //alert(i);
             //this.currentROS = index;
@@ -407,8 +408,7 @@ $(function(){
     showROS: function() {
       var sections = this.$('.ros-container').children().hide();
       var start = this.currentROS > 1 ? this.currentROS : 1;
-      sections.slice(start-1,start+3).show();
-
+      sections.slice(start-1,start+3).show().index();
     },
 
     // toggle details container below input for extras

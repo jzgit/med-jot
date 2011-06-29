@@ -2,7 +2,7 @@
   var root;
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
   root.sections = {
-    'Patients': 'PT',
+    'Patient Info': 'PT',
     'Chief Complaint': 'CC',
     'History of Present Illness': 'HPI',
     'Past Medical History': 'PMH',
